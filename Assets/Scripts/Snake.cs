@@ -8,14 +8,17 @@ using UnityEngine.SceneManagement;
 public class Snake : MonoBehaviour
 {
     public Vector2 _direction = Vector2.right;
-    private List<Transform> _segments;
+    public List<Transform> _segments;
     public Transform segmentPrefab;
     public int initialSize;
+    GameManager gm;
 
     WallController[] walls;
 
     AudioSource playerAudio;
     [SerializeField] AudioClip wallback;
+    [SerializeField] AudioClip monch;
+    [SerializeField] AudioClip die;
 
     private void Start(){
         _segments = new List<Transform>();
@@ -27,6 +30,7 @@ public class Snake : MonoBehaviour
         walls = (WallController[])FindObjectsOfType<WallController>();
 
         playerAudio = GetComponent<AudioSource>();
+        gm = FindObjectOfType<GameManager>();
     }
 
     private void Update(){
@@ -89,13 +93,16 @@ public class Snake : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other){
         if(other.tag == "Food"){
+            playerAudio.PlayOneShot(monch);
             Grow();
             Food gridArea = FindObjectOfType<Food>();
             gridArea.gridAreaOriginal();
             
         }
         else if(other.tag == "Obstacle"){
-            Reset();
+            //Reset();
+            playerAudio.PlayOneShot(die);
+            gm.Lose();
         }
         else if (other.gameObject.CompareTag("boxpowerup"))
         {
