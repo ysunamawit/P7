@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class Snake : MonoBehaviour
 {
@@ -63,18 +65,28 @@ public class Snake : MonoBehaviour
     }
 
     private void Reset(){
-        for(int i = 1; i < _segments.Count; i++){
-            Destroy(_segments[i].gameObject);
-        }
-        _segments.Clear();
-        _segments.Add(this.transform);
+        // for(int i = 1; i < _segments.Count; i++){
+        //     Destroy(_segments[i].gameObject);
+        // }
+        // _segments.Clear();
+        // _segments.Add(this.transform);
 
-        for(int i = 1; i < this.initialSize; i++){
-            _segments.Add(Instantiate(this.segmentPrefab));
-        }
+        // for(int i = 1; i < this.initialSize; i++){
+        //     _segments.Add(Instantiate(this.segmentPrefab));
+        // }
 
-        this.transform.position = Vector3.zero;
+        // this.transform.position = Vector3.zero;
+        //transform.position = Vector3.zero;
+        //Invoke("ReloadScene", 10f);
+        SceneManager.LoadScene("Snake");
     }
+
+    private void ReloadScene()
+    {
+        // Reload the scene
+        SceneManager.LoadScene("Snake");
+    }
+
     private void OnTriggerEnter2D(Collider2D other){
         if(other.tag == "Food"){
             Grow();
