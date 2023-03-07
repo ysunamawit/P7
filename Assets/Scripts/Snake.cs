@@ -10,12 +10,21 @@ public class Snake : MonoBehaviour
     public Transform segmentPrefab;
     public int initialSize;
 
+    WallController[] walls;
+
+    AudioSource playerAudio;
+    [SerializeField] AudioClip wallback;
+
     private void Start(){
         _segments = new List<Transform>();
         _segments.Add(this.transform);
         for(int i = 1; i < this.initialSize; i++){
             _segments.Add(Instantiate(this.segmentPrefab));
         }
+
+        walls = (WallController[])FindObjectsOfType<WallController>();
+
+        playerAudio = GetComponent<AudioSource>();
     }
 
     private void Update(){
@@ -72,6 +81,14 @@ public class Snake : MonoBehaviour
         }
         else if(other.tag == "Obstacle"){
             Reset();
+        }
+        else if (other.gameObject.CompareTag("boxpowerup"))
+        {
+            playerAudio.PlayOneShot(wallback);
+            foreach (WallController wall in walls)
+            {
+                wall.MoveBack();
+            }
         }
     }
 }
