@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerCollisions : MonoBehaviour
 {
     WallController[] walls;
+    AudioSource playerAudio;
+    [SerializeField] AudioClip wallback;
     
     // Start is called before the first frame update
     void Start()
@@ -26,10 +28,13 @@ public class PlayerCollisions : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("boxpowerup"))
         {
+            playerAudio.PlayOneShot(wallback);
             foreach (WallController wall in walls)
             {
                 wall.MoveBack();
             }
+            // need to spawn new wall pickup
+            Destroy(collision.gameObject);
         }
     }
 }
