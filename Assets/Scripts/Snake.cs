@@ -78,6 +78,9 @@ public class Snake : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other){
         if(other.tag == "Food"){
             Grow();
+            Food gridArea = FindObjectOfType<Food>();
+            gridArea.gridAreaOriginal();
+            
         }
         else if(other.tag == "Obstacle"){
             Reset();

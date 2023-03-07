@@ -475,8 +475,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179091108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 16, z: 0}
-  m_LocalScale: {x: 48, y: 10, z: 1}
+  m_LocalPosition: {x: 4, y: 33, z: 0}
+  m_LocalScale: {x: 90, y: 40, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -495,7 +495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: -1, z: 0}
-  speed: 0.25
+  speed: 0.5
   moveBackDistance: {x: 0, y: 0.5, z: 0}
 --- !u!1 &333076764
 GameObject:
@@ -660,8 +660,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474201903}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -16, z: 0}
-  m_LocalScale: {x: 48, y: 10, z: 1}
+  m_LocalPosition: {x: 4, y: -33, z: 0}
+  m_LocalScale: {x: 90, y: 40, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -680,7 +680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 1, z: 0}
-  speed: 0.25
+  speed: 0.5
   moveBackDistance: {x: 0, y: -0.5, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -996,8 +996,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878031699}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: 0, z: 0}
-  m_LocalScale: {x: 15, y: 50, z: 1}
+  m_LocalPosition: {x: -42, y: 0, z: 0}
+  m_LocalScale: {x: 28, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 1, y: 0, z: 0}
-  speed: 0.25
+  speed: 0.5
   moveBackDistance: {x: -0.5, y: 0, z: 0}
 --- !u!1 &2000714079
 GameObject:
@@ -1123,8 +1123,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000714079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30, y: 0, z: 0}
-  m_LocalScale: {x: 15, y: 50, z: 1}
+  m_LocalPosition: {x: 42, y: 0, z: 0}
+  m_LocalScale: {x: 28, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1143,7 +1143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: -1, y: 0, z: 0}
-  speed: 0.25
+  speed: 0.5
   moveBackDistance: {x: 0.5, y: 0, z: 0}
 --- !u!1001 &738847914728181360
 PrefabInstance:

@@ -6,9 +6,23 @@ using UnityEngine;
 public class Food : MonoBehaviour
 {
     public BoxCollider2D gridArea;
+    private Vector2 initialSize;
 
     private void Start(){
         RandomizePosition();
+        initialSize = gridArea.size;
+    }
+
+    public void Update()
+    {
+        float deltaTime = Time.deltaTime;
+        Vector2 newSize = initialSize - new Vector2(deltaTime * 1, deltaTime * 1);
+        gridArea.size = newSize;
+    }
+
+    public void gridAreaOriginal()
+    {
+        gridArea.size = initialSize;
     }
 
     private void RandomizePosition(){
