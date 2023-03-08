@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class Snake : MonoBehaviour
@@ -11,9 +12,11 @@ public class Snake : MonoBehaviour
     public List<Transform> _segments;
     public Transform segmentPrefab;
     public int initialSize;
+    public Image winScreen;
     private bool _isPaused = false;
     private Color originalColor;
     private int segmentCount = 3;
+    
 
     WallController[] walls;
 
@@ -95,15 +98,24 @@ public class Snake : MonoBehaviour
             }
         }
         segment.GetComponent<SpriteRenderer>().color = rainbowColors[colorIndex];
+
+        if (segmentCount >= 24)
+        {
+            winScreen.gameObject.SetActive(true);
+            StartCoroutine(RestartGameAfterDelay(3f));
+        }
+    }
+
+    private IEnumerator RestartGameAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnTriggerEnter2D(Collider2D other){
         if(other.tag == "Food"){
             playerAudio.PlayOneShot(monch);
             Grow();
-            Food gridArea = FindObjectOfType<Food>();
-            gridArea.gridAreaOriginal();
-            
         }
         else if(other.tag == "Obstacle"){
             playerAudio.PlayOneShot(die);
