@@ -11,7 +11,9 @@ public class Snake : MonoBehaviour
     public List<Transform> _segments;
     public Transform segmentPrefab;
     public int initialSize;
-    GameManager gm;
+    private bool _isPaused = false;
+    private Color originalColor;
+    private int segmentCount = 3;
 
     WallController[] walls;
 
@@ -19,6 +21,18 @@ public class Snake : MonoBehaviour
     [SerializeField] AudioClip wallback;
     [SerializeField] AudioClip monch;
     [SerializeField] AudioClip die;
+
+    private Color[] rainbowColors = new Color[] {
+        new Color(1f, 0.5f, 0.5f),     
+        new Color(1f, 0.75f, 0.5f),    
+        new Color(1f, 1f, 0.5f),       
+        new Color(0.5f, 1f, 0.5f),    
+        new Color(0.5f, 0.5f, 1f),    
+        new Color(0.75f, 0.5f, 1f),   
+        new Color(1f, 0.5f, 1f)
+    };
+
+    private int colorIndex = 0;
 
     private void Start(){
         _segments = new List<Transform>();
@@ -30,7 +44,8 @@ public class Snake : MonoBehaviour
         walls = (WallController[])FindObjectsOfType<WallController>();
 
         playerAudio = GetComponent<AudioSource>();
-        gm = FindObjectOfType<GameManager>();
+
+        originalColor = GetComponent<SpriteRenderer>().color;
     }
 
     private void Update(){
@@ -49,15 +64,21 @@ public class Snake : MonoBehaviour
 
     private void FixedUpdate()
     {
-        for(int i = _segments.Count - 1; i > 0; i--){
-            _segments[i].position = _segments[i-1].position;
+        if (!_isPaused) {
+            for(int i = _segments.Count - 1; i > 0; i--){
+                _segments[i].position = _segments[i-1].position;
+            }
+            this.transform.position = new Vector3(
+                Mathf.Round(this.transform.position.x) + _direction.x,
+                Mathf.Round(this.transform.position.y) + _direction.y,
+                0.0f
+            );
+        } 
+        else {
+            foreach(Transform segment in _segments){
+                segment.GetComponent<SpriteRenderer>().color = Color.red;
+            }
         }
-
-        this.transform.position = new Vector3(
-            Mathf.Round(this.transform.position.x) + _direction.x,
-            Mathf.Round(this.transform.position.y) + _direction.y,
-            0.0f
-        );
     }
 
     private void Grow()
@@ -66,29 +87,14 @@ public class Snake : MonoBehaviour
         segment.position = _segments[_segments.Count - 1].position;
         _segments.Add(segment);
 
-    }
-
-    private void Reset(){
-        // for(int i = 1; i < _segments.Count; i++){
-        //     Destroy(_segments[i].gameObject);
-        // }
-        // _segments.Clear();
-        // _segments.Add(this.transform);
-
-        // for(int i = 1; i < this.initialSize; i++){
-        //     _segments.Add(Instantiate(this.segmentPrefab));
-        // }
-
-        // this.transform.position = Vector3.zero;
-        //transform.position = Vector3.zero;
-        //Invoke("ReloadScene", 10f);
-        SceneManager.LoadScene("Snake");
-    }
-
-    private void ReloadScene()
-    {
-        // Reload the scene
-        SceneManager.LoadScene("Snake");
+        segmentCount++;
+        if (segmentCount % 4 == 0) {
+            colorIndex++;
+            if (colorIndex >= rainbowColors.Length) {
+                colorIndex = 0;
+            }
+        }
+        segment.GetComponent<SpriteRenderer>().color = rainbowColors[colorIndex];
     }
 
     private void OnTriggerEnter2D(Collider2D other){
@@ -100,9 +106,8 @@ public class Snake : MonoBehaviour
             
         }
         else if(other.tag == "Obstacle"){
-            //Reset();
             playerAudio.PlayOneShot(die);
-            gm.Lose();
+            StartCoroutine(ShowSnakeSizeAndLose());
         }
         else if (other.gameObject.CompareTag("boxpowerup"))
         {
@@ -112,6 +117,13 @@ public class Snake : MonoBehaviour
                 wall.MoveBack();
             }
         }
+    }
+
+    IEnumerator ShowSnakeSizeAndLose() {
+        _isPaused = true; 
+        yield return new WaitForSeconds(2.0f); 
+        _isPaused = false; 
+        SceneManager.LoadScene("Snake");
     }
 }
 

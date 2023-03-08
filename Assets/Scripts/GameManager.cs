@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     HitStop hsControl;
-    [SerializeField] float loseStopDuration = 5f;
     [SerializeField] GameObject losePanel;
     UISnake uisnake;
 
